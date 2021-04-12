@@ -1,0 +1,41 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= hidden_input f, :project_id, value: @project.id %>
+
+  <%= label f, :mark_1 %>
+  <%= number_input f, :mark_1 %>
+  <%= error_tag f, :mark_1 %>
+
+  <%= label f, :mark_2 %>
+  <%= number_input f, :mark_2 %>
+  <%= error_tag f, :mark_2 %>
+
+  <%= label f, :mark_3 %>
+  <%= number_input f, :mark_3 %>
+  <%= error_tag f, :mark_3 %>
+
+  <%= label f, :mark_4 %>
+  <%= number_input f, :mark_4 %>
+  <%= error_tag f, :mark_4 %>
+
+  <%= label f, :mark_5 %>
+  <%= number_input f, :mark_5 %>
+  <%= error_tag f, :mark_5 %>
+
+  <%= label f, :total_mark %>
+  <%= number_input f, :total_mark, step: "any" %>
+  <%= error_tag f, :total_mark %>
+
+  <%= label f, :final_mark %>
+  <%= number_input f, :final_mark %>
+  <%= error_tag f, :final_mark %>
+
+  <div>
+    <%= submit "Save" %>
+  </div>
+<% end %>

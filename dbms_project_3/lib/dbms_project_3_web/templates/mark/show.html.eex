@@ -1,0 +1,43 @@
+<h1>Mark details:</h1>
+
+<ul>
+
+  <li>
+    <strong>Mark 1:</strong>
+    <%= @mark.mark_1 %>
+  </li>
+
+  <li>
+    <strong>Mark 2:</strong>
+    <%= @mark.mark_2 %>
+  </li>
+
+  <li>
+    <strong>Mark 3:</strong>
+    <%= @mark.mark_3 %>
+  </li>
+
+  <li>
+    <strong>Mark 4:</strong>
+    <%= @mark.mark_4 %>
+  </li>
+
+  <li>
+    <strong>Mark 5:</strong>
+    <%= @mark.mark_5 %>
+  </li>
+
+  <li>
+    <strong>Total mark:</strong>
+    <%= @mark.total_mark %>
+  </li>
+
+  <li>
+    <strong>Final mark:</strong>
+    <%= @mark.final_mark %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.mark_path(@conn, :edit, @mark) %></span>
+<span><%= link "Back", to: Routes.mark_path(@conn, :index) %></span>

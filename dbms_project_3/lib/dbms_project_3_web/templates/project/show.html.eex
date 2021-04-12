@@ -1,0 +1,50 @@
+<h1>Project details: </h1>
+
+<ul>
+
+  <li>
+    <strong>Classifier:</strong>
+    <%= @project.classifier %>
+  </li>
+
+  <li>
+    <strong>Topic:</strong>
+    <%= @project.topic %>
+  </li>
+
+  <li>
+    <strong>Annual production program:</strong>
+    <%= @project.annual_production_program %>
+  </li>
+
+  <li>
+    <strong>Task given date:</strong>
+    <%= @project.task_given_date %>
+  </li>
+
+  <li>
+    <strong>Project defending date:</strong>
+    <%= @project.project_defending_date %>
+  </li>
+
+  <li>
+    <strong>Notes:</strong>
+    <%= @project.notes %>
+  </li>
+
+  <%= if @project.marks === nil do %>
+    <div>
+      Hasn't been marked yet
+    </div>
+
+    <span><%= link "Assign marks!", to: Routes.mark_path(@conn, :new, [{:project_id, @project.id}]) %></span>
+  <% end %>
+
+  <%= if @project.marks !== nil do %>
+    <%= render(MarkView, "show.html", mark: @project.marks, conn: @conn) %>
+  <% end %>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.project_path(@conn, :edit, @project) %></span>
+<span><%= link "Back", to: Routes.project_path(@conn, :index) %></span>

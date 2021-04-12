@@ -1,0 +1,38 @@
+<h1>Listing Marks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mark 1</th>
+      <th>Mark 2</th>
+      <th>Mark 3</th>
+      <th>Mark 4</th>
+      <th>Mark 5</th>
+      <th>Total mark</th>
+      <th>Final mark</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for mark <- @marks do %>
+    <tr>
+      <td><%= mark.mark_1 %></td>
+      <td><%= mark.mark_2 %></td>
+      <td><%= mark.mark_3 %></td>
+      <td><%= mark.mark_4 %></td>
+      <td><%= mark.mark_5 %></td>
+      <td><%= mark.total_mark %></td>
+      <td><%= mark.final_mark %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.mark_path(@conn, :show, mark) %></span>
+        <span><%= link "Edit", to: Routes.mark_path(@conn, :edit, mark) %></span>
+        <span><%= link "Delete", to: Routes.mark_path(@conn, :delete, mark), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Mark", to: Routes.mark_path(@conn, :new) %></span>
