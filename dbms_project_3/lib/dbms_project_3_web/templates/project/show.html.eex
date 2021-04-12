@@ -44,6 +44,8 @@
     <%= render(MarkView, "show.html", mark: @project.marks, conn: @conn) %>
   <% end %>
 
+  <span><%= link "Go to respective student", to: Routes.student_path(@conn, :show, @student) %></span>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.project_path(@conn, :edit, @project) %></span>

@@ -12,6 +12,12 @@ defmodule DbmsProject3.StudentProjects do
     Project |> Repo.all()
   end
 
+  def search_projects(params) do
+    search_term = get_in(params, ["query_projects"])
+
+    Project |> Project.search(search_term) |> Repo.all()
+  end
+
   def get_project!(id), do: Project |> Repo.get!(id)
 
   def get_project_assoc!(id),

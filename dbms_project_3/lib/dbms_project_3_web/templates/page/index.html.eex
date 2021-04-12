@@ -2,7 +2,3 @@
   <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
   <p>Peace of mind from prototype to production</p>
 </section>
-
-<section class="row">
-  <span><%= link "List students", to: Routes.student_path(@conn, :index) %></span>
-</section>

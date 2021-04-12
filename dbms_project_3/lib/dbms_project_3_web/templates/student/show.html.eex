@@ -32,9 +32,21 @@
     <%= @student.form_of_education %>
   </li>
 
+  <%= if @student.level !== nil do %>
+    <li>
+      <strong>Level of education:</strong>
+      <%= @student.level.name %>
+    </li>
+  <% end %>
+
   <li>
     <strong>Certified semester:</strong>
     <%= @student.certified_semester %>
+  </li>
+
+  <li>
+    <strong>Group:</strong>
+    <%= @student.group.number %>
   </li>
 
   <%= if @student.project === nil do %>
@@ -46,7 +58,7 @@
   <% end %>
 
   <%= if @student.project !== nil do %>
-    <%= render(ProjectView, "show.html", project: @student.project, conn: @conn) %>
+    <%= render(ProjectView, "show.html", project: @student.project, student: @student, conn: @conn) %>
   <% end %>
 
 </ul>

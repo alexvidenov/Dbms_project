@@ -3,15 +3,26 @@ defmodule DbmsProject3Web.StudentController do
 
   alias DbmsProject3.Students
   alias DbmsProject3.Students.Student
+  alias DbmsProject3.Groups
+  alias DbmsProject3.EducationLevels
 
-  def index(conn, _params) do
-    students = Students.list_students()
-    render(conn, "index.html", students: students)
+  def index(conn, params) do
+    cond do
+      is_integer(params) == true ->
+        students = Students.search_students_by_fac_num(params)
+        render(conn, "index.html", students: students)
+
+      true ->
+        students = Students.search_students(params)
+        render(conn, "index.html", students: students)
+    end
   end
 
   def new(conn, _params) do
+    groups = Groups.list_groups()
+    levels = EducationLevels.list_levels()
     changeset = Students.change_student(%Student{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, groups: groups, levels: levels)
   end
 
   def create(conn, %{"student" => student_params}) do
@@ -27,14 +38,23 @@ defmodule DbmsProject3Web.StudentController do
   end
 
   def show(conn, %{"id" => id}) do
+    # Doesnt load the STUDENT ASSOC OF PROJECT HERE
     student = Students.get_student_assoc!(id)
     render(conn, "show.html", student: student)
   end
 
   def edit(conn, %{"id" => id}) do
+    groups = Groups.list_groups()
+    levels = EducationLevels.list_levels()
     student = Students.get_student!(id)
     changeset = Students.change_student(student)
-    render(conn, "edit.html", student: student, changeset: changeset)
+
+    render(conn, "edit.html",
+      student: student,
+      changeset: changeset,
+      groups: groups,
+      levels: levels
+    )
   end
 
   def update(conn, %{"id" => id, "student" => student_params}) do

@@ -25,9 +25,23 @@
   <%= text_input f, :studying_year %>
   <%= error_tag f, :studying_year %>
 
-  <%= label f, :form_of_education %>
-  <%= text_input f, :form_of_education %>
-  <%= error_tag f, :form_of_education %>
+  <div class="form-group">
+    <%= label f, :form_of_education, "Form of education", class: "control-label" %>
+    <%= select f, :form_of_education, ["Regular": "regular", "Part time": "part time", "Remote": "remote"], class: "form-control" %>
+    <%= error_tag f, :form_of_education %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :group_id, "Assign group", class: "control-label" %>
+    <%= select f, :group_id, groups_for_select(@groups), class: "form-control" %>
+    <%= error_tag f, :group_id %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :level_id, "Assign level of education", class: "control-label" %>
+    <%= select f, :level_id, levels_for_select(@levels), class: "form-control" %>
+    <%= error_tag f, :level_id %>
+  </div>
 
   <%= label f, :certified_semester %>
   <%= number_input f, :certified_semester %>

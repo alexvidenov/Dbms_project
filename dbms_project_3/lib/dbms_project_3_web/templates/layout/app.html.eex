@@ -11,19 +11,25 @@
   <body>
     <header>
       <section class="container">
-        <nav role="navigation">
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-            <% end %>
-          </ul>
-        </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
-        </a>
+        <span><%= link "View all students", to: Routes.student_path(@conn, :index) %></span>
+        <span><%= link "View all groups", to: Routes.group_path(@conn, :index) %></span>
+        <span><%= link "View all educational levels", to: Routes.level_path(@conn, :index) %></span>
+        <span><%= link "View all projects", to: Routes.project_path(@conn, :index) %></span>
       </section>
     </header>
+
+    <section>
+      <%= form_for @conn, Routes.student_path(@conn, :index), [method: :get, class: "pull-right"], fn f -> %>
+        <%= search_input f, :query_students %>
+        <%= submit "Search by student parameters" %>
+      <% end %>
+
+      <%= form_for @conn, Routes.project_path(@conn, :index), [method: :get, class: "pull-right"], fn f -> %>
+        <%= search_input f, :query_projects %>
+        <%= submit "Search by project parameters" %>
+      <% end %>
+    </section>
+
     <main role="main" class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>

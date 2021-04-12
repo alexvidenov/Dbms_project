@@ -1,6 +1,7 @@
 defmodule DbmsProject3.StudentProjects.Project do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query
 
   alias DbmsProject3.Consultations.Consultation
   alias DbmsProject3.ProjectMarks.Mark
@@ -40,5 +41,13 @@ defmodule DbmsProject3.StudentProjects.Project do
       :task_given_date,
       :project_defending_date
     ])
+  end
+
+  def search(query, search_term) do
+    wildcard_search = "%#{search_term}%"
+
+    from project in query,
+      where: ilike(project.classifier, ^wildcard_search),
+      or_where: ilike(project.topic, ^wildcard_search)
   end
 end

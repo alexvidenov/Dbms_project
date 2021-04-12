@@ -8,15 +8,6 @@ defmodule DbmsProject3.Groups do
 
   alias DbmsProject3.Groups.Group
 
-  @doc """
-  Returns the list of groups.
-
-  ## Examples
-
-      iex> list_groups()
-      [%Group{}, ...]
-
-  """
   def list_groups do
     Repo.all(Group)
   end

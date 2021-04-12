@@ -8,8 +8,8 @@ defmodule DbmsProject3Web.ProjectController do
 
   alias DbmsProject3.Students
 
-  def index(conn, _params) do
-    projects = StudentProjects.list_projects()
+  def index(conn, params) do
+    projects = StudentProjects.search_projects(params)
     render(conn, "index.html", projects: projects)
   end
 
@@ -33,8 +33,7 @@ defmodule DbmsProject3Web.ProjectController do
 
   def show(conn, %{"id" => id}) do
     project = StudentProjects.get_project_assoc!(id)
-    Logger.debug("PROJECT: #{inspect(project)}")
-    render(conn, "show.html", project: project)
+    render(conn, "show.html", project: project, student: project.student)
   end
 
   def edit(conn, %{"id" => id}) do

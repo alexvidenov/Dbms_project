@@ -1,6 +1,7 @@
 defmodule DbmsProject3.Students.Student do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query
 
   alias DbmsProject3.EducationLevels.Level
   alias DbmsProject3.Groups.Group
@@ -32,7 +33,9 @@ defmodule DbmsProject3.Students.Student do
       :last_name,
       :studying_year,
       :form_of_education,
-      :certified_semester
+      :certified_semester,
+      :level_id,
+      :group_id
     ])
     |> validate_required([
       :fac_number,
@@ -41,7 +44,28 @@ defmodule DbmsProject3.Students.Student do
       :last_name,
       :studying_year,
       :form_of_education,
-      :certified_semester
+      :certified_semester,
+      :level_id,
+      :group_id
     ])
+  end
+
+  def search(query, search_term) do
+    wildcard_search = "%#{search_term}%"
+
+    from student in query,
+      where: ilike(student.first_name, ^wildcard_search),
+      or_where: ilike(student.middle_name, ^wildcard_search)
+  end
+
+  def with_fac_num(query, number) do
+    case number do
+      nil ->
+        query
+
+      _ ->
+        from student in query,
+          where: student.fac_number == ^number
+    end
   end
 end
