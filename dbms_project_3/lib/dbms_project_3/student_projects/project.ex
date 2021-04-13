@@ -50,4 +50,14 @@ defmodule DbmsProject3.StudentProjects.Project do
       where: ilike(project.classifier, ^wildcard_search),
       or_where: ilike(project.topic, ^wildcard_search)
   end
+
+  def count_by_seach(query, search_term) do
+    wildcard_search = "%#{search_term}%"
+
+    from project in query,
+      select: count(project.id),
+      left_join: student in assoc(project, :student),
+      left_join: marks in assoc(project, :marks),
+      where: ilike(student.studying_year, ^wildcard_search) and is_nil(marks) == false
+  end
 end

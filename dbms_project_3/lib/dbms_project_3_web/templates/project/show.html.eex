@@ -38,10 +38,22 @@
     </div>
 
     <span><%= link "Assign marks!", to: Routes.mark_path(@conn, :new, [{:project_id, @project.id}]) %></span>
+  <% else %>
+    <%= render(MarkView, "show.html", mark: @project.marks, conn: @conn) %>
   <% end %>
 
-  <%= if @project.marks !== nil do %>
-    <%= render(MarkView, "show.html", mark: @project.marks, conn: @conn) %>
+  <%= if @project.consultations === [] do %>
+    <div>
+      No consultations until now
+    </div>
+
+    <span><%= link "Add a consultation date", to: Routes.consultation_path(@conn, :new, [{:project_id, @project.id}]) %></span>
+  <% else %>
+    <%= for consultation <- @project.consultations do %>
+      <%= render(ConsultationView, "show.html", consultation: consultation, conn: @conn) %>
+    <% end %>
+
+    <span><%= link "Add a consultation date", to: Routes.consultation_path(@conn, :new, [{:project_id, @project.id}]) %></span>
   <% end %>
 
   <span><%= link "Go to respective student", to: Routes.student_path(@conn, :show, @student) %></span>

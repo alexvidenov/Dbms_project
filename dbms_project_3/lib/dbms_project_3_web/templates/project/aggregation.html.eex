@@ -1,0 +1,5 @@
+
+<li>
+    <strong> <%= @description %>:</strong>
+    <%= @count %>
+</li>

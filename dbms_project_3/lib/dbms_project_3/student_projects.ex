@@ -8,26 +8,28 @@ defmodule DbmsProject3.StudentProjects do
 
   alias DbmsProject3.StudentProjects.Project
 
-  def list_projects do
-    Project |> Repo.all()
-  end
+  def list_projects, do: Project |> Repo.all()
 
-  def search_projects(params) do
-    search_term = get_in(params, ["query_projects"])
+  def search_projects(params),
+    do: Project |> Project.search(params) |> Repo.all()
 
-    Project |> Project.search(search_term) |> Repo.all()
-  end
+  def project_count_for_year(params), do: Project |> Project.count_by_seach(params) |> Repo.one()
 
   def get_project!(id), do: Project |> Repo.get!(id)
 
   def get_project_assoc!(id),
-    do: Project |> Repo.get!(id) |> Repo.preload(:student) |> Repo.preload(:marks)
+    do:
+      Project
+      |> Repo.get!(id)
+      |> Repo.preload(:student)
+      |> Repo.preload(:marks)
+      |> Repo.preload(:consultations)
 
-  def create_project(attrs \\ %{}) do
-    %Project{}
-    |> Project.changeset(attrs)
-    |> Repo.insert()
-  end
+  def create_project(attrs \\ %{}),
+    do:
+      %Project{}
+      |> Project.changeset(attrs)
+      |> Repo.insert()
 
   def update_project(%Project{} = project, attrs) do
     project

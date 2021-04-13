@@ -5,7 +5,7 @@
     </div>
   <% end %>
 
-  <%= hidden_input f, :student_id, value: @student.id %>
+  <%= hidden_input f, :student_id, value: @student_id %>
 
   <%= label f, :classifier %>
   <%= text_input f, :classifier %>

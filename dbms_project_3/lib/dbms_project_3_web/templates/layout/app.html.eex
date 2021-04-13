@@ -18,7 +18,7 @@
       </section>
     </header>
 
-    <section>
+    <section class="row">
       <%= form_for @conn, Routes.student_path(@conn, :index), [method: :get, class: "pull-right"], fn f -> %>
         <%= search_input f, :query_students %>
         <%= submit "Search by student parameters" %>
@@ -27,6 +27,11 @@
       <%= form_for @conn, Routes.project_path(@conn, :index), [method: :get, class: "pull-right"], fn f -> %>
         <%= search_input f, :query_projects %>
         <%= submit "Search by project parameters" %>
+      <% end %>
+
+      <%= form_for @conn, Routes.project_path(@conn, :index), [method: :get, class: "pull-right"], fn f -> %>
+        <%= search_input f, :query_projects_aggr %>
+        <%= submit "See count of finished projects for year" %>
       <% end %>
     </section>
 

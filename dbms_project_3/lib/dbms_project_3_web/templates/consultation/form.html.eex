@@ -5,6 +5,8 @@
     </div>
   <% end %>
 
+  <%= hidden_input f, :project_id, value: @project_id %>
+
   <%= label f, :consultation_date %>
   <%= date_select f, :consultation_date %>
   <%= error_tag f, :consultation_date %>

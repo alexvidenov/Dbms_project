@@ -1,4 +1,4 @@
-<h1>Show Consultation</h1>
+<h1>Consultation details:</h1>
 
 <ul>
 
@@ -9,5 +9,4 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.consultation_path(@conn, :edit, @consultation) %></span>
 <span><%= link "Back", to: Routes.consultation_path(@conn, :index) %></span>

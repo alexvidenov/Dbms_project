@@ -50,16 +50,15 @@
   </li>
 
   <%= if @student.project === nil do %>
-    <div>
+     <div>
       No project assigned yet
     </div>
 
     <span><%= link "Assign project", to: Routes.project_path(@conn, :new, [{:student_id, @student.id}]) %></span>
+  <% else %>
+     <%= render(ProjectView, "show.html", project: @student.project, student: @student, conn: @conn) %>
   <% end %>
 
-  <%= if @student.project !== nil do %>
-    <%= render(ProjectView, "show.html", project: @student.project, student: @student, conn: @conn) %>
-  <% end %>
 
 </ul>
 

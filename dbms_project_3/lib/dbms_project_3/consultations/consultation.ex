@@ -15,7 +15,7 @@ defmodule DbmsProject3.Consultations.Consultation do
   @doc false
   def changeset(consultation, attrs) do
     consultation
-    |> cast(attrs, [:consultation_date])
+    |> cast(attrs, [:consultation_date, :project_id])
     |> validate_required([:consultation_date])
   end
 end

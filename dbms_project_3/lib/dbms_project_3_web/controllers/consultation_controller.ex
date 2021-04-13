@@ -3,15 +3,16 @@ defmodule DbmsProject3Web.ConsultationController do
 
   alias DbmsProject3.Consultations
   alias DbmsProject3.Consultations.Consultation
+  alias DbmsProject3.StudentProjects.Project
 
   def index(conn, _params) do
     consultations = Consultations.list_consultations()
     render(conn, "index.html", consultations: consultations)
   end
 
-  def new(conn, _params) do
+  def new(conn, %{"project_id" => id}) do
     changeset = Consultations.change_consultation(%Consultation{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, project_id: id)
   end
 
   def create(conn, %{"consultation" => consultation_params}) do
@@ -19,7 +20,7 @@ defmodule DbmsProject3Web.ConsultationController do
       {:ok, consultation} ->
         conn
         |> put_flash(:info, "Consultation created successfully.")
-        |> redirect(to: Routes.consultation_path(conn, :show, consultation))
+        |> redirect(to: Routes.project_path(conn, :show, %Project{id: consultation.project_id}))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)

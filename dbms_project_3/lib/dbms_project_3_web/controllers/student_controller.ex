@@ -7,14 +7,29 @@ defmodule DbmsProject3Web.StudentController do
   alias DbmsProject3.EducationLevels
 
   def index(conn, params) do
-    cond do
-      is_integer(params) == true ->
-        students = Students.search_students_by_fac_num(params)
-        render(conn, "index.html", students: students)
+    if(params !== %{}) do
+      search_term = get_in(params, ["query_students"])
 
-      true ->
-        students = Students.search_students(params)
-        render(conn, "index.html", students: students)
+      cond do
+        is_search_term_int(search_term) === true ->
+          students = Students.search_students_by_fac_num(search_term)
+          render(conn, "index.html", students: students)
+
+        true ->
+          students = Students.search_students(search_term)
+          render(conn, "index.html", students: students)
+      end
+    else
+      students = Students.list_students()
+      render(conn, "index.html", students: students)
+    end
+  end
+
+  defp is_search_term_int(value) do
+    case Integer.parse(value) do
+      {_, ""} -> true
+      {_, _} -> false
+      :error -> false
     end
   end
 
@@ -38,7 +53,6 @@ defmodule DbmsProject3Web.StudentController do
   end
 
   def show(conn, %{"id" => id}) do
-    # Doesnt load the STUDENT ASSOC OF PROJECT HERE
     student = Students.get_student_assoc!(id)
     render(conn, "show.html", student: student)
   end

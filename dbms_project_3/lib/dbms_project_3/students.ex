@@ -4,23 +4,23 @@ defmodule DbmsProject3.Students do
   alias DbmsProject3.Repo
   alias DbmsProject3.Students.Student
 
+  require Logger
+
   def list_students do
     Student |> Repo.all()
   end
 
   def search_students(params) do
-    search_term = get_in(params, ["query_students"])
-
     Student
-    |> Student.search(search_term)
+    |> Student.search(params)
     |> Repo.all()
   end
 
   def search_students_by_fac_num(params) do
-    search_term = get_in(params, ["query_students"])
+    Logger.debug("EBASI: #{inspect(params)}")
 
     Student
-    |> Student.with_fac_num(search_term)
+    |> Student.with_fac_num(params)
     |> Repo.all()
   end
 
@@ -28,10 +28,11 @@ defmodule DbmsProject3.Students do
 
   def get_student_assoc!(id) do
     Student
-    |> where([student], student.id == ^id)
+    |> where([s], s.id == ^id)
     |> join(:left, [s, _], _ in assoc(s, :project))
-    |> join(:left, [_, project], _ in assoc(project, :marks))
-    |> preload([_, p, m], project: {p, marks: m})
+    |> join(:left, [_, p], _ in assoc(p, :consultations))
+    |> join(:left, [_, p], _ in assoc(p, :marks))
+    |> preload([_, p, c, m], project: {p, marks: m, consultations: c})
     |> Repo.one()
     |> Repo.preload(:group)
     |> Repo.preload(:level)
