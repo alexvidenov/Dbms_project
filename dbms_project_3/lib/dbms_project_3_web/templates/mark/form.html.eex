@@ -27,10 +27,6 @@
   <%= number_input f, :mark_5 %>
   <%= error_tag f, :mark_5 %>
 
-  <%= label f, :total_mark %>
-  <%= number_input f, :total_mark, step: "any" %>
-  <%= error_tag f, :total_mark %>
-
   <%= label f, :final_mark %>
   <%= number_input f, :final_mark %>
   <%= error_tag f, :final_mark %>

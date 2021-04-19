@@ -33,6 +33,7 @@ defmodule DbmsProject3Web.StudentController do
     end
   end
 
+  @spec new(Plug.Conn.t(), any) :: Plug.Conn.t()
   def new(conn, _params) do
     groups = Groups.list_groups()
     levels = EducationLevels.list_levels()

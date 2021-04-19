@@ -31,6 +31,6 @@ defmodule DbmsProject3.ProjectMarks.Mark do
       :final_mark,
       :project_id
     ])
-    |> validate_required([:mark_1, :mark_2, :mark_3, :mark_4, :mark_5, :total_mark, :final_mark])
+    |> validate_required([:mark_1, :mark_2, :mark_3, :mark_4, :mark_5, :final_mark])
   end
 end

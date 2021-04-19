@@ -17,7 +17,9 @@ defmodule DbmsProject3Web.MarkController do
   end
 
   def create(conn, %{"mark" => mark_params}) do
-    case ProjectMarks.create_mark(mark_params) do
+    average = get_average_from_mark_params(mark_params)
+
+    case ProjectMarks.create_mark(mark_params, average) do
       {:ok, mark} ->
         conn
         |> put_flash(:info, "Mark created successfully.")
@@ -35,7 +37,6 @@ defmodule DbmsProject3Web.MarkController do
 
   def edit(conn, %{"id" => id}) do
     mark = ProjectMarks.get_mark_assoc!(id)
-    # needs to preload assocs
     changeset = ProjectMarks.change_mark(mark)
     render(conn, "edit.html", mark: mark, project: mark.project, changeset: changeset)
   end
@@ -43,7 +44,11 @@ defmodule DbmsProject3Web.MarkController do
   def update(conn, %{"id" => id, "mark" => mark_params}) do
     mark = ProjectMarks.get_mark!(id)
 
-    case ProjectMarks.update_mark(mark, mark_params) do
+    average = get_average_from_mark_params(mark_params)
+
+    mark_params_with_calculated_avg = Map.put(mark_params, "total_mark", average)
+
+    case ProjectMarks.update_mark(mark, mark_params_with_calculated_avg) do
       {:ok, mark} ->
         conn
         |> put_flash(:info, "Mark updated successfully.")
@@ -62,4 +67,10 @@ defmodule DbmsProject3Web.MarkController do
     |> put_flash(:info, "Mark deleted successfully.")
     |> redirect(to: Routes.mark_path(conn, :index))
   end
+
+  defp get_average_from_mark_params(mark_params),
+    do:
+      (String.to_integer(mark_params["mark_1"]) + String.to_integer(mark_params["mark_2"]) +
+         String.to_integer(mark_params["mark_3"]) + String.to_integer(mark_params["mark_4"]) +
+         String.to_integer(mark_params["mark_5"])) / 5
 end

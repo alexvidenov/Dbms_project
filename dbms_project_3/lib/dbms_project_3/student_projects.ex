@@ -1,8 +1,4 @@
 defmodule DbmsProject3.StudentProjects do
-  @moduledoc """
-  The StudentProjects context.
-  """
-
   import Ecto.Query, warn: false
   alias DbmsProject3.Repo
 

@@ -19,10 +19,14 @@ defmodule DbmsProject3Web.ProjectController do
 
         "query_projects_aggr" ->
           count = StudentProjects.project_count_for_year(value)
-          render(conn, "aggregation.html", description: "Description", count: count)
+
+          render(conn, "aggregation.html",
+            description: "Project count for year " <> value,
+            count: count
+          )
 
         _ ->
-          Logger.debug("Something failed")
+          Logger.debug("Unknown key was passed")
       end
     else
       projects = StudentProjects.list_projects()
